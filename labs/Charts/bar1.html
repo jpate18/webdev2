@@ -29,18 +29,11 @@
 
         // Set chart options
         var options = {'title':'How much juice I drank last night',
-
-           is3D: true,
-           slices: {  1: {offset: 0.2},
-                    2: {offset: 0.4},
-                    3: {offset: 0.7},
-                    4: {offset: 0.6},
-          },
                        'width':400,
                        'height':300};
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
     </script>
