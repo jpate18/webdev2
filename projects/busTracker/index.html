@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <style>
+table {
+    width:100%;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+table#t01 tr:nth-child(even) {
+    background-color: #eee;
+}
+table#t01 tr:nth-child(odd) {
+   background-color:#fff;
+}
+table#t01 th {
+    background-color: black;
+    color: white;
+}
+</style>
+  
+  <meta charset="utf-8">
+  <title>jQuery.parseXML demo</title>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+  <table id="t01">
+  <tr>
+    <th>Route</th>
+    <th>Bus Number</th> 
+    <th>Time</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+  
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <script>
+        $(function() {
+          
+         
+          var apiPassThruUrl = "https://polar-garden-75406.herokuapp.com/apiPassThru.php";
+          
+          var apiEndpoint = "http://ctabustracker.com/bustime/api/v2/getpredictions";
+          
+          
+          $.ajax({
+              url: apiPassThruUrl,
+              dataType: "json",
+              method: 'GET',
+              data: {"apiEndpoint": apiEndpoint,
+                      "rt"  :"49,X49",
+                      "stpid":"8417,8195,12527,12569",
+                      "key" : "gkaQ23znYPJa48MfEGiWN7Rmx",
+                      "format":"json"}
+            }).done (function (data) {
+              console.log(data);
+              $("body").append("<h1>Bus Routes</h1>");
+             
+              $.each(data["bustime-response"]["prd"], function(i,v) {
+                  $("body").append("Route #" + v.rt + ", " +v.prdctdn  +v.des +v.tmstmp  +v.rtdir  +v.stpnm  +v.dly +"<br>");
+                
+              });
+
+            });
+        });
+            
+  
+</script>
+ 
+</body>
+</html>
