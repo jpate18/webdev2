@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Crime Data</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('img/computercuffs.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                         <h1>Chicago Crime <Data></Data></h1>
+                                  
+    
+    <!-- a div to store the results -->
+   
+                        <hr class="small">
+                        <span class="subheading">Enter the year looking for below, to search the City of Chicago data portal crime records.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+   
+                     <p data-cloud9-id='9'>   
+        </p>
+      <div >
+
+    
+       
+        <input id="txtQuery"  align="center" type="text" placeholder="Year"></input>
+      
+        
+        <select id="primary" >
+  <option value="ROBBERY">ROBBERY</option>
+  <option value="DECEPTIVE PRACTICE">DECEPTIVE PRACTICE</option>
+  <option value="WEAPONS VIOLATION">WEAPONS VIOLATION</option>
+  <option value="BATTERY">BATTERY</option>
+ <option value="MOTOR VEHICLE THEFT">MOTOR VEHICLE THEFT</option>
+ <option value="CRIMINAL DAMAGE">CRIMINAL DAMAGE</option>
+ <option value="NARCOTICS">NARCOTICS</option>
+ <option value="THEFT">THEFT</option>
+ <option value="BURGLARY">BURGLARY</option>
+  <option value="ASSAULT">ASSAULT</option>
+   <option value="CRIMINAL TRESPASS">CRIMINAL TRESPASS</option>
+    <option value="PUBLIC PEACE VIOLATION">PUBLIC PEACE VIOLATION</option>
+     <option value="PROSTITUTION">PROSTITUTION</option>
+      <option value="CRIM SEXUAL ASSAULT">CRIM SEXUAL ASSAULT</option>
+        <option value="SEX OFFENSE">SEX OFFENSE</option>
+         <option value="HOMICIDE">HOMICIDE</option>
+          <option value="OFFENSE INVOLVING CHILDREN">OFFENSE INVOLVING CHILDREN</option>
+           <option value="INTERFERENCE WITH PUBLIC OFFICER">INTERFERENCE WITH PUBLIC OFFICER</option>
+  <option value="STALKING">STALKING</option>
+   <option value="OTHER OFFENSE">OTHER OFFENSE</option>
+</select>
+<button type="button" id="btnSearch"  >Search </button>
+    </div>
+    
+              
+        </div>
+</div>
+</div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                         </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/clean-blog.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+    /*global $*/
+        var crimeData;
+    
+        $(function () {
+            
+            var baseUrl = "https://data.cityofchicago.org/resource/6zsd-86xi.json";
+            
+           
+           
+            var url = baseUrl;
+
+            
+           $("#btnSearch").on("click", function() {
+                $("#results").html("");
+                
+          
+                  var year = $("#txtQuery").val(); 
+                
+                 var searchUrl = url+"?year="+ year ;
+  
+ 
+     searchUrl += "&primary_type=" + $("#primary").val()
+ 
+   
+                    
+               $.getJSON(searchUrl)
+                .done (function (data)  {
+                         crimeData = data;
+                         console.log(data);
+                       
+               $.each(data, function(index, value) {
+                        $('#results').append("Number of records returned:" +data.length)
+                         var html = 
+                         "<h2> year: " 
+                         + value.year
+                         + "</h2>"
+                         +"<p> case #: "
+                         +value.case_number
+                       +"</p>"
+                           + "<p> arrested for: "
+                         + value.primary_type
+                         +"</p>"
+                    
+                       + "<p> Arrested ?: "
+                         + value.arrest
+                         + "</p>"
+                 +"<p> district:"
+                       +value.district
+                       + "</p>"                 +"<p> block:"
+                       +value.block
+                       +"</p>"
+                         +"<p> longitude: "
+                       +value.longitude
+                       +"</p>"
+                       +"<p> latitude: "
+                       +value.latitude
+                       +    '<a href="https://www.google.com/maps/place/' + value.latitude + "," + value.longitude +'"> Google Map </a>'
+                            
+                       +"</p>"
+                       
+                     ;
+         
+                       $("#results").append(html);
+                        
+               
+                    });
+            });
+            });
+        });
+                    //console.log(url)
+            
+//             $("#btnSearch").on("click", function() {
+//                 $("#results").html("");
+                
+                    
+                
+//                  var arrested = $("#txtQuery").val(); ;
+                
+//                 var searchUrl = url+"?primary_type="+ arrested ;
+  
+//   console.log(searchUrl);
+   
+                    
+//                 $.getJSON(searchUrl)
+//                 .done (function (data)  {
+//                         crimeData = data;
+//                         console.log(data);
+                        
+//                     $.each(data, function(index, value) {
+//                         //console.log(value.snippet);
+//                         var html = 
+//                         "<h2> year: " 
+//                         + value.year
+//                         + "</h2>"
+//                         +"<p> case #: "
+//                         +value.case_number
+//                         +"</p>"
+//                           + "<p> arrested for: "
+//                         + value.primary_type
+//                         +"</p>"
+                    
+//                       + "<p> Arrested ?: "
+//                         + value.arrest
+//                         + "</p>"
+//                 +"<p> district:"
+//                       +value.district
+//                       + "</p>"
+//                 +"<p> block:"
+//                       +value.block
+//                       +"</p>"
+//                         +"<p> longitude: "
+//                       +value.longitude
+//                       +"</p>"
+//                       +"<p> latitude: "
+//                       +value.latitude
+//                       +    '<a href="https://www.google.com/maps/place/' + value.latitude + "," + value.longitude +'"> Google Map </a>'
+                            
+//                       +"</p>"
+                       
+//                       ;
+         
+//                         $("#results").append(html);
+                        
+               
+//                     });
+//                 });
+//             });
+            
+    /*global $*/
+        
+        
+            
+        //    console.log(url)
+        
+        
+    </script>
+     
+       <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div id="results">
+        
+        
+        
+    </div>
+              
+        </div>
+</div>
+</div>
+
+    
+
+</body>
+
+</html> <script src="/_static/preview/livecss.js"></script>
